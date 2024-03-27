@@ -22,6 +22,17 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
+// 添加CORS服务并配置策略
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyAllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // 你的React应用程序的端口
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -31,6 +42,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage(); // 确保在开发环境中使用异常页面
+    // 应用CORS策略
+    app.UseCors("MyAllowSpecificOrigins");
 }
 else
 {
@@ -46,12 +60,14 @@ app.UseAuthentication();
 app.UseIdentityServer();
 app.UseAuthorization();
 
+// 应用CORS策略，确保在调用UseRouting和UseEndpoints之间
+app.UseCors("MyAllowSpecificOrigins");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html");
 
 app.Run();
-
