@@ -1,4 +1,16 @@
-﻿# Use the official .NET core SDK as a parent image
+﻿# 使用 Node.js 官方镜像，选择一个版本
+FROM node:14 AS node
+
+# 其他步骤
+...
+
+# 安装 npm
+RUN apt-get update && apt-get install -y npm
+
+# 例如，在这之后的步骤中可以使用 npm
+RUN npm install
+
+# Use the official .NET core SDK as a parent image
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /app
 
