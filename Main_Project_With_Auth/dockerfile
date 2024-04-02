@@ -24,7 +24,10 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 # Install Node.js and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1-mesa-glx
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt-get install -y nodejs
 
 # Expose the port your application will run on
