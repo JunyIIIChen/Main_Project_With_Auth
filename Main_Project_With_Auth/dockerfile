@@ -1,7 +1,7 @@
 ﻿
 
 # Use the official .NET core SDK as a parent image
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 # Set the working directory in the container
 WORKDIR /app
@@ -24,7 +24,7 @@ COPY . .
 RUN dotnet publish -c Release -o out
 
 # Build the runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
 # Set the working directory in the container
 WORKDIR /app
