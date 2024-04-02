@@ -1,43 +1,30 @@
-﻿# 使用 Node.js 官方镜像，选择一个版本
-FROM node:14 AS node
+﻿# Use the official .NET core SDK as a parent image
+FROM mcr.microsoft.com/dotnet/sdk:7.8 AS build
 
-# 创建一个空的目录，用于后续复制 package.json
+# Set the working directory in the container
 WORKDIR /app
 
-# 检查 package.json 是否存在，如果不存在，则创建一个空的 package.json
-RUN test -f package.json || echo "{}" > package.json
-
-# 安装 npm 依赖
-RUN npm install
-
-# 将 .NET core SDK 作为父镜像
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /app
-
-# 复制项目文件并还原所有依赖项（使用 .csproj 作为项目名称）
+# Copy the project file and restore any dependencies (use .csproj for the project name)
 COPY *.csproj ./
 RUN dotnet restore
 
-# 复制其余的应用代码
+# Copy the rest of the application code
 COPY . .
 
-# 检查是否在 Node.js 阶段构建了 node_modules 文件夹
-# 如果没有构建成功，这一步将会失败，并显示错误信息
-RUN ls /app/node_modules
-
-# 将 npm 依赖复制到 .NET Core 镜像中
-COPY --from=node /app/node_modules ./node_modules
-
-# 发布应用程序
+# Publish the application
 RUN dotnet publish -c Release -o out
 
-# 构建运行时镜像
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+# Build the runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:?.@ AS runtime
+
+# Set the working directory in the container
 WORKDIR /app
+
+# Copy the published application from build stage
 COPY --from=build /app/out ./
 
-# 暴露应用程序运行的端口
+# Expose the port your application will run on
 EXPOSE 80
 
-# 启动应用程序
-ENTRYPOINT ["dotnet", "Main_Project_With_Auth.dll"]
+# Start the application
+ENTRYPOINT ["dotnet", "YourProjectName.dll"]
