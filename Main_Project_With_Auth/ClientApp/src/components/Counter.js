@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 
 export class Counter extends Component {
   static displayName = Counter.name;
@@ -9,11 +10,14 @@ export class Counter extends Component {
     this.incrementCounter = this.incrementCounter.bind(this);
   }
 
+
   incrementCounter() {
     this.setState({
       currentCount: this.state.currentCount + 1
     });
-  }
+    }
+
+
 
   render() {
     return (

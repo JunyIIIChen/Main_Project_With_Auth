@@ -1,0 +1,11 @@
+﻿using System;
+namespace Main_Project_With_Auth
+{
+	public class dockerfile
+	{
+		public dockerfile()
+		{
+		}
+	}
+}
+
