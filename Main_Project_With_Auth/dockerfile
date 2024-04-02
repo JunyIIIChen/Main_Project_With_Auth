@@ -1,9 +1,6 @@
 ﻿# 使用 Node.js 官方镜像，选择一个版本
 FROM node:14 AS node
 
-# 其他步骤
-...
-
 # 安装 npm
 RUN apt-get update && apt-get install -y npm
 
