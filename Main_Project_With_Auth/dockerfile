@@ -1,10 +1,9 @@
 ﻿# 使用 Node.js 官方镜像，选择一个版本
 FROM node:14 AS node
 
-# 安装 npm
-RUN apt-get update && apt-get install -y npm
-
-# 例如，在这之后的步骤中可以使用 npm
+# 安装 npm 依赖
+WORKDIR /app
+COPY package.json ./
 RUN npm install
 
 # Use the official .NET core SDK as a parent image
@@ -17,6 +16,9 @@ RUN dotnet restore
 
 # Copy the rest of the application code
 COPY . .
+
+# 将 npm 依赖复制到 .NET Core 镜像中
+COPY --from=node /app/node_modules ./node_modules
 
 # Publish the application
 RUN dotnet publish -c Release -o out
