@@ -1,0 +1,92 @@
+.page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: green;
+  }
+  
+  .page:first-child {
+    background: url('./background.jpg') no-repeat center center;
+    background-size: cover;
+  }
+  
+  .page:not(:first-child) {
+    background-color: black;
+  }
+  
+  .page-content {
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Avoid interaction when the content is transparent */
+  }
+  
+  /* 使用此类使当前页面的内容可见 */
+  .page-current .page-content {
+    opacity: 1;
+    pointer-events: auto; /* Re-enable interaction for the current page */
+  }
+  
+  .navigation-dots {
+    position: fixed;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .navigation-dots {
+    position: fixed;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    margin-bottom: 10px;
+    background-color: grey;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .active {
+    background-color: white; /* 或任何其他颜色以表示活动页面 */
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    margin-bottom: 10px;
+    background-color: grey;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .active {
+    background-color: white; /* Or any color to indicate the active page */
+  }
+  /* Footer Styles */
+.footer {
+    width: 100%;
+    background-color: #333; /* Footer background color */
+    color: white; /* Text color */
+    text-align: center;
+  }
+  
+  .footer-content {
+    padding: 20px; /* Footer padding */
+  }
+  
+  .links a {
+    margin: 0 10px;
+    color: white; /* Link color */
+    text-decoration: none; /* No underline */
+  }
+  
+  .links a:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
+  
+  /* You may need additional media queries to make the footer responsive */
+  
